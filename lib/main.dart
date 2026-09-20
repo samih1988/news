@@ -3,9 +3,12 @@ import 'package:news/providers/app_language_provider.dart';
 import 'package:news/providers/app_theme_provider.dart';
 import 'package:news/sharedPreference/preferences_helper.dart';
 import 'package:news/ui/home/home_screen.dart';
+import 'package:news/ui/splash/splash_screen.dart';
 import 'package:news/utils/app_routes.dart';
 import 'package:news/utils/app_theme.dart';
 import 'package:provider/provider.dart';
+
+import 'l10n/app_localizations.dart';
 
 void main() async {
   // خطوة إجبارية لضمان عمل SharedPreferences قبل تشغيل واجهات التطبيق
@@ -37,10 +40,13 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.homeRouteName,
-      routes: {AppRoutes.homeRouteName: (context) => HomeScreen()},
-      // localizationsDelegates: AppLocalizations.localizationsDelegates,
-      // supportedLocales: AppLocalizations.supportedLocales,
+      initialRoute: AppRoutes.splashRouteName,
+      routes: {
+        AppRoutes.homeRouteName: (context) => HomeScreen(),
+        AppRoutes.splashRouteName: (context) => SplashScreen(),
+      },
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       locale: Locale(languageProvider.appLanguage),
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
