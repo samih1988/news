@@ -45,7 +45,9 @@ class _SplashScreenState extends State<SplashScreen> {
             // الصورة التي في المنتصف (زيادة النسبة لتبدو أوضح)
             Center(
               child: Image.asset(
-                AppAssets.splashWhite,
+                themeProvider.appThemeMode == 'white'
+                    ? AppAssets.splashWhite
+                    : AppAssets.splashDark,
                 width: width * 0.65,
                 // جعل الشعار يأخذ 65% من عرض الشاشة ليكون واضحاً
                 fit: BoxFit.contain, // يضمن عدم تشوه الصورة
@@ -59,7 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
             Padding(
               padding: EdgeInsets.only(bottom: height * 0.04),
               child: Image.asset(
-                AppAssets.splashBrandWhite,
+                themeProvider.appThemeMode == 'white'
+                    ? AppAssets.splashBrandWhite
+                    : AppAssets.splashBrandDark,
                 width: width * 0.35,
                 // جعل البراند يأخذ 35% من العرض ليصبح مرئياً ومتجاوباً
                 fit: BoxFit.contain,

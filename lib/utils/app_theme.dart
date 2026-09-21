@@ -5,47 +5,37 @@ import 'app_styles.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
+    primaryColor: AppColors.white,
+    splashColor: AppColors.black,
     appBarTheme: AppBarThemeData(
       centerTitle: true,
-      backgroundColor: AppColors.transparentColor,
+      backgroundColor: AppColors.black,
     ),
     scaffoldBackgroundColor: AppColors.white,
+    textTheme: TextTheme(
+        labelLarge: AppStyles.bold16black,
+        labelMedium: AppStyles.medium14black,
+        labelSmall: AppStyles.medium12gray,
+        headlineMedium: AppStyles.medium24black,
+        headlineLarge: AppStyles.medium20black
 
-    // iconTheme: IconThemeData(color: AppColors.mainColor),
-    // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    //   backgroundColor: AppColors.white,
-    //   selectedItemColor: AppColors.mainLightColor,
-    //   unselectedItemColor: AppColors.lightGrey,
-    //   selectedLabelStyle: AppStyles.reg12mainLightColor,
-    //   unselectedLabelStyle: AppStyles.reg12GreyColor,
-    // ),
-    // floatingActionButtonTheme: FloatingActionButtonThemeData(
-    //   backgroundColor: AppColors.mainColor,
-    //   shape: StadiumBorder(),
-    //   foregroundColor: AppColors.white,
-    // ),
-    textTheme: TextTheme(headlineLarge: AppStyles.semi20black),
+    ),
   );
   static final ThemeData darkTheme = ThemeData(
+    primaryColor: AppColors.black,
+    splashColor: AppColors.white,
     appBarTheme: AppBarThemeData(
       centerTitle: true,
-      backgroundColor: AppColors.transparentColor,
+      backgroundColor: AppColors.white,
     ),
     scaffoldBackgroundColor: AppColors.black,
+    textTheme: TextTheme(
+        labelLarge: AppStyles.bold16white,
+        labelMedium: AppStyles.medium14bwhite,
+        labelSmall: AppStyles.medium12gray,
+        headlineMedium: AppStyles.medium24white,
+        headlineLarge: AppStyles.medium20bwhite
 
-    // iconTheme: IconThemeData(color: AppColors.white),
-    // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    //   backgroundColor: AppColors.mainDarkColor,
-    //   selectedItemColor: AppColors.mainLightColor,
-    //   unselectedItemColor: AppColors.lightGrey,
-    //   selectedLabelStyle: AppStyles.reg12mainDarkColor,
-    //   unselectedLabelStyle: AppStyles.reg12GreyColor,
-    // ),
-    // floatingActionButtonTheme: FloatingActionButtonThemeData(
-    //   backgroundColor: AppColors.mainLightColor,
-    //   shape: StadiumBorder(),
-    //   foregroundColor: AppColors.white,
-    // ),
-    textTheme: TextTheme(headlineLarge: AppStyles.semi20black),
+    ),
   );
 }
