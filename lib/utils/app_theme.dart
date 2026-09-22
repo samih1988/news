@@ -5,11 +5,14 @@ import 'app_styles.dart';
 
 class AppTheme {
   static final ThemeData lightTheme = ThemeData(
+
     primaryColor: AppColors.white,
     splashColor: AppColors.black,
     appBarTheme: AppBarThemeData(
       centerTitle: true,
       backgroundColor: AppColors.black,
+      iconTheme: const IconThemeData(color: AppColors.white),
+      titleTextStyle: AppStyles.medium20bwhite,
     ),
     scaffoldBackgroundColor: AppColors.white,
     textTheme: TextTheme(
@@ -17,8 +20,7 @@ class AppTheme {
         labelMedium: AppStyles.medium14black,
         labelSmall: AppStyles.medium12gray,
         headlineMedium: AppStyles.medium24black,
-        headlineLarge: AppStyles.medium20black
-
+        headlineLarge: AppStyles.medium20bwhite
     ),
   );
   static final ThemeData darkTheme = ThemeData(
@@ -27,6 +29,8 @@ class AppTheme {
     appBarTheme: AppBarThemeData(
       centerTitle: true,
       backgroundColor: AppColors.white,
+      iconTheme: const IconThemeData(color: AppColors.black),
+      titleTextStyle: AppStyles.medium20black,
     ),
     scaffoldBackgroundColor: AppColors.black,
     textTheme: TextTheme(
@@ -34,8 +38,7 @@ class AppTheme {
         labelMedium: AppStyles.medium14bwhite,
         labelSmall: AppStyles.medium12gray,
         headlineMedium: AppStyles.medium24white,
-        headlineLarge: AppStyles.medium20bwhite
-
+        headlineLarge: AppStyles.medium20black
     ),
   );
 }

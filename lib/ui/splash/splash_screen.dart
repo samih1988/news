@@ -1,9 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:news/ui/home/home_screen.dart';
 import 'package:news/utils/app_assets.dart';
-import 'dart:async';
-
-import 'package:news/utils/app_utilz.dart';
+import 'package:news/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/app_theme_provider.dart';
@@ -35,7 +35,8 @@ class _SplashScreenState extends State<SplashScreen> {
     var themeProvider = Provider.of<AppThemeProvider>(context);
 
     return Scaffold(
-      backgroundColor: Colors.white, // يمكنك تغيير لون الخلفية بحسب الثيم
+      backgroundColor: themeProvider.isDark ? AppColors.black : AppColors.white,
+      // يمكنك تغيير لون الخلفية بحسب الثيم
       body: SafeArea(
         child: Column(
           children: [
@@ -45,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
             // الصورة التي في المنتصف (زيادة النسبة لتبدو أوضح)
             Center(
               child: Image.asset(
-                themeProvider.appThemeMode == 'white'
+                !themeProvider.isDark
                     ? AppAssets.splashWhite
                     : AppAssets.splashDark,
                 width: width * 0.65,
@@ -61,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Padding(
               padding: EdgeInsets.only(bottom: height * 0.04),
               child: Image.asset(
-                themeProvider.appThemeMode == 'white'
+                !themeProvider.isDark
                     ? AppAssets.splashBrandWhite
                     : AppAssets.splashBrandDark,
                 width: width * 0.35,
