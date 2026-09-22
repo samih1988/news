@@ -106,4 +106,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get title => 'عنوان';
+
+  @override
+  String get try_again => 'حاول مرة اخرى';
 }
