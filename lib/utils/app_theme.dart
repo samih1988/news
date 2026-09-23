@@ -10,9 +10,9 @@ class AppTheme {
     splashColor: AppColors.black,
     appBarTheme: AppBarThemeData(
       centerTitle: true,
-      backgroundColor: AppColors.black,
-      iconTheme: const IconThemeData(color: AppColors.white),
-      titleTextStyle: AppStyles.medium20bwhite,
+      backgroundColor: AppColors.white,
+      iconTheme: const IconThemeData(color: AppColors.black),
+      titleTextStyle: AppStyles.medium20black,
     ),
     scaffoldBackgroundColor: AppColors.white,
     textTheme: TextTheme(
@@ -20,7 +20,7 @@ class AppTheme {
         labelMedium: AppStyles.medium14black,
         labelSmall: AppStyles.medium12gray,
         headlineMedium: AppStyles.medium24black,
-        headlineLarge: AppStyles.medium20bwhite
+        headlineLarge: AppStyles.medium20black
     ),
   );
   static final ThemeData darkTheme = ThemeData(
@@ -28,9 +28,9 @@ class AppTheme {
     splashColor: AppColors.white,
     appBarTheme: AppBarThemeData(
       centerTitle: true,
-      backgroundColor: AppColors.white,
-      iconTheme: const IconThemeData(color: AppColors.black),
-      titleTextStyle: AppStyles.medium20black,
+      backgroundColor: AppColors.black,
+      iconTheme: const IconThemeData(color: AppColors.white),
+      titleTextStyle: AppStyles.medium20bwhite,
     ),
     scaffoldBackgroundColor: AppColors.black,
     textTheme: TextTheme(
