@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news/api/apiModel/apiSources/sources.dart';
 import 'package:news/ui/category_details/tabs_widget.dart';
+import 'package:news/ui/news/news_detailes.dart';
 import 'package:news/utils/app_colors.dart';
 import 'package:news/utils/app_utilz.dart';
 
@@ -42,6 +43,8 @@ class _SourceTabsState extends State<SourceTabs> {
                 );
               }).toList(),
             ),
+            Expanded(
+                child: NewsDetailes(source: widget.sourceList[selectedIndex])),
           ],
         ),
       ),

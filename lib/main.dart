@@ -7,6 +7,7 @@ import 'package:news/ui/splash/splash_screen.dart';
 import 'package:news/utils/app_routes.dart';
 import 'package:news/utils/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 import 'l10n/app_localizations.dart';
 
@@ -14,7 +15,8 @@ void main() async {
   // خطوة إجبارية لضمان عمل SharedPreferences قبل تشغيل واجهات التطبيق
   // خطوة إجبارية لضمان عمل الـ SharedPreferences قبل تشغيل الواجهات
   WidgetsFlutterBinding.ensureInitialized();
-
+  // إضافة اللغة العربية لحزمة timeago
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
   // تهيئة ملف الـ Helper وقراءة البيانات المخزنة فوراً في الذاكرة
   await PreferencesHelper.init();
 
