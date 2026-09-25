@@ -108,5 +108,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get title => 'عنوان';
 
   @override
+  String get search => 'بحث';
+
+  @override
+  String get view_full_articles => 'قراءة الملف  كامل';
+
+  @override
   String get try_again => 'حاول مرة اخرى';
 }

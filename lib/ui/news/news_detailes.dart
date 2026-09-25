@@ -2,48 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:news/api/apiModel/apiNews/News_response.dart';
 import 'package:news/api/apiModel/apiSources/sources.dart';
 import 'package:news/api/api_manager.dart';
+import 'package:news/providers/search_provider.dart';
 import 'package:news/ui/news/news_item.dart';
+import 'package:news/ui/news/news_moadl_dialog.dart';
 import 'package:news/widgets/main_error.dart';
 import 'package:news/widgets/main_loading.dart';
+import 'package:provider/provider.dart';
 
 class NewsDetailes extends StatefulWidget {
-  Source source;
+  final Source source;
 
-  NewsDetailes({super.key, required this.source});
+  const NewsDetailes({super.key, required this.source});
 
   @override
   State<NewsDetailes> createState() => _NewsDetailesState();
 }
 
 class _NewsDetailesState extends State<NewsDetailes> {
-  late Future<NewsResponse?> futureNewsList;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getdata();
-  }
-
-  @override
-  void didUpdateWidget(covariant NewsDetailes oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    // 2. التحقق: لو المستخدم غير التاب (المصدر الجديد مش هو القديم)
-    if (oldWidget.source.id != widget.source.id) {
-      getdata(); // احلب أخبار المصدر الجديد فوراً
-    }
-  }
-
-  void getdata() {
-    setState(() {
-      futureNewsList = ApiManager.getNewsBySourceId(widget.source.id ?? '');
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: futureNewsList,
+    var searchProvider = Provider.of<SearchProvider>(context);
+
+    return FutureBuilder<NewsResponse?>(
+      future: ApiManager.getNewsBySourceId(
+        widget.source.id ?? '',
+        search: searchProvider.searchQuery,
+      ),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return MainLoading();
@@ -51,7 +35,6 @@ class _NewsDetailesState extends State<NewsDetailes> {
           return MainError(
             erroMessage: snapshot.error.toString(),
             opressed: () {
-              getdata();
               setState(() {});
             },
           );
@@ -66,7 +49,10 @@ class _NewsDetailesState extends State<NewsDetailes> {
                 )
               : ListView.builder(
                   itemBuilder: (context, index) {
-                    return NewsCardWidget(news: newsList[index]);
+                    return InkWell(onTap: () {
+                      NewsMoadlDialog.showFixedTextModal(
+                          context, news: newsList[index]);
+                    }, child: NewsCardWidget(news: newsList[index]));
                   },
                   itemCount: newsList.length,
                 );
@@ -75,3 +61,4 @@ class _NewsDetailesState extends State<NewsDetailes> {
     );
   }
 }
+

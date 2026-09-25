@@ -4,14 +4,20 @@ import 'package:provider/provider.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_language_provider.dart';
 import '../providers/app_theme_provider.dart';
+import '../providers/search_provider.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_styles.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   final VoidCallback? onGoToHomeClicked;
 
   const CustomDrawer({super.key, this.onGoToHomeClicked});
 
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     var themeProvider = Provider.of<AppThemeProvider>(context);
@@ -49,8 +55,8 @@ class CustomDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.pop(context); // Close drawer
-              if (onGoToHomeClicked != null) {
-                onGoToHomeClicked!();
+              if (widget.onGoToHomeClicked != null) {
+                widget.onGoToHomeClicked!();
               }
             },
           ),

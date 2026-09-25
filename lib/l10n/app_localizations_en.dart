@@ -108,5 +108,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get title => 'Title';
 
   @override
+  String get search => 'Search';
+
+  @override
+  String get view_full_articles => 'View Full Articles';
+
+  @override
   String get try_again => 'Tray Again';
 }

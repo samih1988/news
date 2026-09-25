@@ -25,9 +25,16 @@ class _CategoryDetailsState extends State<CategoryDetails> {
     sourcesFuture = ApiManager.getSource(widget.category?.id ?? 'general');
   }
 
+  @override
+  void didUpdateWidget(covariant CategoryDetails oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.category?.id != widget.category?.id) {
+      _refreshData();
+    }
+  }
+
   void _refreshData() {
     setState(() {
-      // بنجدد الـ Future عشان الـ FutureBuilder يحس بالتغيير ويعيد الطلب
       sourcesFuture = ApiManager.getSource(widget.category?.id ?? 'general');
     });
   }

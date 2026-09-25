@@ -296,6 +296,18 @@ abstract class AppLocalizations {
   /// **'Title'**
   String get title;
 
+  /// No description provided for @search.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get search;
+
+  /// No description provided for @view_full_articles.
+  ///
+  /// In en, this message translates to:
+  /// **'View Full Articles'**
+  String get view_full_articles;
+
   /// No description provided for @try_again.
   ///
   /// In en, this message translates to:
