@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news/providers/app_language_provider.dart';
 import 'package:news/providers/app_theme_provider.dart';
+import 'package:news/providers/search_provider.dart';
 import 'package:news/sharedPreference/preferences_helper.dart';
 import 'package:news/ui/home/home_screen.dart';
 import 'package:news/ui/splash/splash_screen.dart';
@@ -15,6 +16,8 @@ void main() async {
   // خطوة إجبارية لضمان عمل SharedPreferences قبل تشغيل واجهات التطبيق
   // خطوة إجبارية لضمان عمل الـ SharedPreferences قبل تشغيل الواجهات
   WidgetsFlutterBinding.ensureInitialized();
+  // 2. 👈 السطر السحري لحل مشكلة المحاكي تماماً
+
   // إضافة اللغة العربية لحزمة timeago
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   // تهيئة ملف الـ Helper وقراءة البيانات المخزنة فوراً في الذاكرة
@@ -25,6 +28,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => AppLanguageProvider()),
         ChangeNotifierProvider(create: (context) => AppThemeProvider()),
+        ChangeNotifierProvider(create: (context) => SearchProvider()),
       ],
       child: MyApp(),
     ),

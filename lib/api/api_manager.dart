@@ -19,17 +19,49 @@ class ApiManager {
     }
   }
 
-  static Future<NewsResponse> getNewsBySourceId(String sourceIndex) async {
+  static Future<NewsResponse> getNewsBySourceId(String sourceIndex, {
+    String? search,
+  }) async {
     try {
-      Uri url = Uri.https(ApiConstant.baseUrl, ApiEndPoint.newsApi, {
+      Map<String, String> queryParameters = {
         'apiKey': ApiConstant.apiKey,
-        "sources": sourceIndex
-      });
+      };
+      if (sourceIndex.isNotEmpty) {
+        queryParameters['sources'] = sourceIndex;
+      }
+      if (search != null && search
+          .trim()
+          .isNotEmpty) {
+        queryParameters['q'] = search.trim();
+      }
+
+      Uri url = Uri.https(
+        ApiConstant.baseUrl,
+        ApiEndPoint.newsApi,
+        queryParameters,
+      );
       var response = await http.get(url);
       return NewsResponse.fromJson(jsonDecode(response.body));
     } catch (err) {
       rethrow;
     }
+  }
 
+  static Future<NewsResponse> searchNews(String search) async {
+    try {
+      Map<String, String> queryParameters = {
+        'apiKey': ApiConstant.apiKey,
+        'q': search.trim(),
+      };
+      Uri url = Uri.https(
+        ApiConstant.baseUrl,
+        ApiEndPoint.newsApi,
+        queryParameters,
+      );
+      var response = await http.get(url);
+      return NewsResponse.fromJson(jsonDecode(response.body));
+    } catch (err) {
+      rethrow;
+    }
   }
 }

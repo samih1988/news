@@ -60,6 +60,7 @@ class CustomTextFormField extends StatelessWidget {
       obscuringCharacter: obscuringCharacter ?? "*",
       maxLines: maxline ?? 1,
       decoration: InputDecoration(
+        isDense: true,
         filled: fill,
         fillColor: filledColor,
         enabledBorder: _buildOutlineInputBorder(
