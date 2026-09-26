@@ -1,6 +1,8 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:news/api/apiModel/apiNews/News_response.dart';
+
 import 'apiModel/apiSources/source_response.dart';
 import 'api_constant.dart';
 import 'api_end_point.dart';
@@ -19,19 +21,22 @@ class ApiManager {
     }
   }
 
-  static Future<NewsResponse> getNewsBySourceId(String sourceIndex, {
+  static Future<NewsResponse> getNewsBySourceId(
+    String sourceIndex, {
     String? search,
+    int page = 1,
+    int pageSize = 10,
   }) async {
     try {
       Map<String, String> queryParameters = {
         'apiKey': ApiConstant.apiKey,
+        'page': page.toString(),
+        'pageSize': pageSize.toString(),
       };
       if (sourceIndex.isNotEmpty) {
         queryParameters['sources'] = sourceIndex;
       }
-      if (search != null && search
-          .trim()
-          .isNotEmpty) {
+      if (search != null && search.trim().isNotEmpty) {
         queryParameters['q'] = search.trim();
       }
 

@@ -11,12 +11,10 @@ import '../../widgets/main_loading.dart';
 class NewsMoadlDialog {
   static void showFixedTextModal(BuildContext context,
       {required Articles news}) {
-    // أخذ العدد المطلوب من الكلمات ودمجهم في نص واحد
     String displayedText = news.title!;
     showDialog(
       context: context,
       barrierDismissible: true,
-
       builder: (BuildContext context) {
         var height = context.height;
         return AlertDialog(
@@ -51,9 +49,7 @@ class NewsMoadlDialog {
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
-                // SizedBox(height: 16),
 
-                // النص المقصوص (العدد المعين من الكلمات)
                 Text(
                   displayedText,
                   style: Theme
