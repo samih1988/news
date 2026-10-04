@@ -209,7 +209,7 @@ abstract class AppLocalizations {
   /// No description provided for @forget_password.
   ///
   /// In en, this message translates to:
-  /// **'Forget Password'**
+  /// **'Forget Password?'**
   String get forget_password;
 
   /// No description provided for @login.
@@ -311,8 +311,68 @@ abstract class AppLocalizations {
   /// No description provided for @try_again.
   ///
   /// In en, this message translates to:
-  /// **'Tray Again'**
+  /// **'Try Again'**
   String get try_again;
+
+  /// No description provided for @good_morning.
+  ///
+  /// In en, this message translates to:
+  /// **'Good Morning\nHere is some news for you'**
+  String get good_morning;
+
+  /// No description provided for @view_all.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get view_all;
+
+  /// No description provided for @general.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get general;
+
+  /// No description provided for @business.
+  ///
+  /// In en, this message translates to:
+  /// **'Business'**
+  String get business;
+
+  /// No description provided for @sports.
+  ///
+  /// In en, this message translates to:
+  /// **'Sports'**
+  String get sports;
+
+  /// No description provided for @health.
+  ///
+  /// In en, this message translates to:
+  /// **'Health'**
+  String get health;
+
+  /// No description provided for @entertainment.
+  ///
+  /// In en, this message translates to:
+  /// **'Entertainment'**
+  String get entertainment;
+
+  /// No description provided for @technology.
+  ///
+  /// In en, this message translates to:
+  /// **'Technology'**
+  String get technology;
+
+  /// No description provided for @no_data.
+  ///
+  /// In en, this message translates to:
+  /// **'No Data Found'**
+  String get no_data;
+
+  /// No description provided for @science.
+  ///
+  /// In en, this message translates to:
+  /// **'Science'**
+  String get science;
 }
 
 class _AppLocalizationsDelegate
