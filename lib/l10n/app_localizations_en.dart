@@ -63,7 +63,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enter_password => 'Enter your password';
 
   @override
-  String get forget_password => 'Forget Password';
+  String get forget_password => 'Forget Password?';
 
   @override
   String get login => 'Login';
@@ -114,5 +114,35 @@ class AppLocalizationsEn extends AppLocalizations {
   String get view_full_articles => 'View Full Articles';
 
   @override
-  String get try_again => 'Tray Again';
+  String get try_again => 'Try Again';
+
+  @override
+  String get good_morning => 'Good Morning\nHere is some news for you';
+
+  @override
+  String get view_all => 'View All';
+
+  @override
+  String get general => 'General';
+
+  @override
+  String get business => 'Business';
+
+  @override
+  String get sports => 'Sports';
+
+  @override
+  String get health => 'Health';
+
+  @override
+  String get entertainment => 'Entertainment';
+
+  @override
+  String get technology => 'Technology';
+
+  @override
+  String get no_data => 'No Data Found';
+
+  @override
+  String get science => 'Science';
 }

@@ -4,6 +4,7 @@ import 'package:news/l10n/app_localizations.dart';
 import 'package:news/models/category_model.dart';
 import 'package:news/providers/search_provider.dart';
 import 'package:news/ui/news/news_item.dart';
+import 'package:news/ui/news/news_moadl_dialog.dart';
 import 'package:news/widgets/custom_drawer.dart';
 import 'package:news/widgets/custom_text_form_field.dart';
 import 'package:news/widgets/main_error.dart';
@@ -112,11 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(String searchQuery) {
-    if (selectedCategory != null) {
-      return CategoryDetails(
-        category: selectedCategory,
-      );
-    } else if (searchQuery
+    if (isSearching && searchQuery
         .trim()
         .isNotEmpty) {
       return FutureBuilder(
@@ -143,20 +140,34 @@ class _HomeScreenState extends State<HomeScreen> {
           return newsList.isEmpty
               ? Center(
             child: Text(
-              "No News Found",
+              AppLocalizations
+                  .of(context)
+                  ?.no_data ?? "No News Found",
               style: Theme
                   .of(context)
                   .textTheme
-                  .labelMedium,
+                  .headlineMedium,
             ),
           )
               : ListView.builder(
-            itemBuilder: (context, index) {
-              return NewsCardWidget(news: newsList[index]);
-            },
             itemCount: newsList.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () {
+                  NewsMoadlDialog.showFixedTextModal(
+                    context,
+                    news: newsList[index],
+                  );
+                },
+                child: NewsCardWidget(news: newsList[index]),
+              );
+            },
           );
         },
+      );
+    } else if (selectedCategory != null) {
+      return CategoryDetails(
+        category: selectedCategory,
       );
     } else {
       return CategoryFragment(

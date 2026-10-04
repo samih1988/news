@@ -27,7 +27,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dark => 'ليلى';
 
   @override
-  String get dark_mode => 'الوضع اليللى';
+  String get dark_mode => 'الوضع الليلى';
 
   @override
   String get logout => 'تسجيل الخروج';
@@ -54,7 +54,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get lets_start => 'ابدء';
 
   @override
-  String get login_account => 'الدخول الى حسسابك';
+  String get login_account => 'الدخول الى حسابك';
 
   @override
   String get enter_mail => 'ادخل الايميل';
@@ -111,8 +111,38 @@ class AppLocalizationsAr extends AppLocalizations {
   String get search => 'بحث';
 
   @override
-  String get view_full_articles => 'قراءة الملف  كامل';
+  String get view_full_articles => 'قراءة الملف كامل';
 
   @override
   String get try_again => 'حاول مرة اخرى';
+
+  @override
+  String get good_morning => 'صباح الخير\nإليك بعض الأخبار من أجلك';
+
+  @override
+  String get view_all => 'عرض الكل';
+
+  @override
+  String get general => 'عام';
+
+  @override
+  String get business => 'أعمال';
+
+  @override
+  String get sports => 'رياضة';
+
+  @override
+  String get health => 'صحة';
+
+  @override
+  String get entertainment => 'ترفيه';
+
+  @override
+  String get technology => 'تكنولوجيا';
+
+  @override
+  String get no_data => 'لا يوجد بيانات ';
+
+  @override
+  String get science => 'علوم';
 }

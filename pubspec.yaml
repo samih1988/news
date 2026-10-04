@@ -44,6 +44,8 @@ dependencies:
   cached_network_image: ^4.0.1
   timeago: ^3.7.1
   webview_flutter: ^4.14.1
+  dio: ^5.11.1
+  pretty_dio_logger: ^1.4.0
 
 dev_dependencies:
   flutter_test:

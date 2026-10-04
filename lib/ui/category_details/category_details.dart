@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:news/api/api_manager.dart';
 import 'package:news/ui/category_details/source_tabs.dart';
+import 'package:news/viewModels/source_view_model.dart';
 import 'package:news/widgets/main_error.dart';
 import 'package:news/widgets/main_loading.dart';
+import 'package:provider/provider.dart';
 
-import '../../api/apiModel/apiSources/source_response.dart';
 import '../../models/category_model.dart';
 
 class CategoryDetails extends StatefulWidget {
@@ -17,12 +17,11 @@ class CategoryDetails extends StatefulWidget {
 }
 
 class _CategoryDetailsState extends State<CategoryDetails> {
-  late Future<SourceResponse?> sourcesFuture;
-
+  SourceViewModel sourceViewModel = SourceViewModel();
   @override
   void initState() {
     super.initState();
-    sourcesFuture = ApiManager.getSource(widget.category?.id ?? 'general');
+    sourceViewModel.getSource(widget.category?.id ?? 'general');
   }
 
   @override
@@ -35,35 +34,29 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
   void _refreshData() {
     setState(() {
-      sourcesFuture = ApiManager.getSource(widget.category?.id ?? 'general');
+      sourceViewModel.getSource(widget.category?.id ?? 'general');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: sourcesFuture,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
+    return ChangeNotifierProvider(create: (context) => sourceViewModel,
+      child: Consumer<SourceViewModel>(builder: (context, viewModel, child) {
+        if (viewModel.isLoading) {
           return MainLoading();
-        } else if (snapshot.hasError) {
-          return MainError(
-            erroMessage: snapshot.error.toString(),
-            opressed: () {
-              _refreshData();
-            },
-          );
-        } else if (snapshot.data?.status != 'ok') {
-          return MainError(
-            erroMessage: snapshot.data!.message!,
-            opressed: () {
-              _refreshData();
-            },
-          );
         }
-        var sourceList = snapshot.data?.sources ?? [];
-        return SourceTabs(sourceList: sourceList);
-      },
+        else if (viewModel.errorMessage != null) {
+          return MainError(erroMessage: viewModel.errorMessage!,
+              opressed: () {
+                viewModel.getSource(widget.category!.id);
+              });
+        }
+        else if (viewModel.sourceList == null) {
+          return MainLoading();
+        } else {
+          return SourceTabs(sourceList: viewModel.sourceList!);
+        }
+      },),
     );
   }
 }

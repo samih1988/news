@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:news/providers/app_theme_provider.dart';
+import 'package:news/l10n/app_localizations.dart';
 import 'package:news/utils/app_utilz.dart';
-import 'package:provider/provider.dart';
 
 import '../../models/category_model.dart';
-import '../../utils/app_styles.dart';
 import 'widgets/category_item_widget.dart';
 
 class CategoryFragment extends StatelessWidget {
@@ -17,27 +15,31 @@ class CategoryFragment extends StatelessWidget {
     var height = context.height;
     var width = context.width;
     var categories = CategoryModel.getCategories();
-    var themeProvider = Provider.of<AppThemeProvider>(context);
+    var localizations = AppLocalizations.of(context)!;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: width * .04),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Good Morning Here is some news for you",
-            style: themeProvider.isDark
-                ? AppStyles.medium24white
-                : AppStyles.medium24black,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              localizations.good_morning,
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(height: 1.3),
+            ),
           ),
-          SizedBox(height: height * .02),
+          SizedBox(height: height * .01),
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.only(bottom: 24),
               itemCount: categories.length,
               itemBuilder: (context, index) {
                 return CategoryItemWidget(
-                  index: index,
+                  category: categories[index],
                   onCategoryClick: onCategoryClick,
                 );
               },
