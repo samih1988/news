@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/cubit/language/language_view_model_cubit.dart';
+import 'package:news/cubit/theme/theme_view_model_cubit.dart';
 
 import '../l10n/app_localizations.dart';
-import '../providers/app_language_provider.dart';
-import '../providers/app_theme_provider.dart';
-import '../providers/search_provider.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_styles.dart';
 
@@ -20,10 +19,10 @@ class CustomDrawer extends StatefulWidget {
 class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<AppThemeProvider>(context);
-    var languageProvider = Provider.of<AppLanguageProvider>(context);
+    var themeCubit = context.watch<ThemeViewModelCubit>();
+    var languageCubit = context.watch<LanguageViewModelCubit>();
     var localizations = AppLocalizations.of(context)!;
-    bool isDark = themeProvider.isDark;
+    bool isDark = themeCubit.isDark;
 
     return Drawer(
       backgroundColor: isDark ? AppColors.black : AppColors.white,
@@ -100,7 +99,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<ThemeMode>(
-                      value: themeProvider.appThemeMode,
+                      value: themeCubit.state.themeMode,
                       isExpanded: true,
                       dropdownColor: isDark ? AppColors.black : AppColors.white,
                       icon: Icon(
@@ -129,7 +128,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ],
                       onChanged: (newThemeMode) {
                         if (newThemeMode != null) {
-                          themeProvider.changeAppThemeMode(newThemeMode);
+                          themeCubit.changeAppThemeMode(newThemeMode);
                         }
                       },
                     ),
@@ -173,7 +172,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
-                      value: languageProvider.appLanguage,
+                      value: languageCubit.state.languageCode,
                       isExpanded: true,
                       dropdownColor: isDark ? AppColors.black : AppColors.white,
                       icon: Icon(
@@ -202,7 +201,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       ],
                       onChanged: (newLang) {
                         if (newLang != null) {
-                          languageProvider.changeAppLanguage(newLang);
+                          languageCubit.changeAppLanguage(newLang);
                         }
                       },
                     ),

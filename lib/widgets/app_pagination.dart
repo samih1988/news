@@ -72,7 +72,9 @@ class AppPagination extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? Theme.of(context).primaryColor
+                      ? Theme
+                      .of(context)
+                      .splashColor
                       : AppColors.grey,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: AppColors.grey),
@@ -81,7 +83,7 @@ class AppPagination extends StatelessWidget {
                   "$pageNum",
                   style: TextStyle(
                     color: isSelected
-                        ? Colors.white
+                        ? Colors.green
                         : Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),

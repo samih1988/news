@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/di/di.dart';
+import 'package:news/di_config/di_config.dart';
+import 'package:news/ui/category_details/cubit/source_bloc_state.dart';
+import 'package:news/ui/category_details/cubit/source_cubit_view_model.dart';
 import 'package:news/ui/category_details/source_tabs.dart';
 import 'package:news/viewModels/source_view_model.dart';
 import 'package:news/widgets/main_error.dart';
@@ -17,11 +22,11 @@ class CategoryDetails extends StatefulWidget {
 }
 
 class _CategoryDetailsState extends State<CategoryDetails> {
-  SourceViewModel sourceViewModel = SourceViewModel();
+  SourceCubitViewModel sourceCubitViewModel = getIt<SourceCubitViewModel>();
   @override
   void initState() {
     super.initState();
-    sourceViewModel.getSource(widget.category?.id ?? 'general');
+    sourceCubitViewModel.getSource(widget.category?.id ?? 'general');
   }
 
   @override
@@ -34,29 +39,32 @@ class _CategoryDetailsState extends State<CategoryDetails> {
 
   void _refreshData() {
     setState(() {
-      sourceViewModel.getSource(widget.category?.id ?? 'general');
+      sourceCubitViewModel.getSource(widget.category?.id ?? 'general');
     });
   }
 
   @override
+  void dispose() {
+    sourceCubitViewModel.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (context) => sourceViewModel,
-      child: Consumer<SourceViewModel>(builder: (context, viewModel, child) {
-        if (viewModel.isLoading) {
-          return MainLoading();
-        }
-        else if (viewModel.errorMessage != null) {
-          return MainError(erroMessage: viewModel.errorMessage!,
-              opressed: () {
-                viewModel.getSource(widget.category!.id);
-              });
-        }
-        else if (viewModel.sourceList == null) {
-          return MainLoading();
+    return BlocBuilder<SourceCubitViewModel, SourceBlocState>(
+      bloc: sourceCubitViewModel,
+      builder: (context, state) {
+        if (state is SourceSuccessState) {
+          return SourceTabs(sourceList: state.sourceList);
+        } else if (state is SourceErrorState) {
+          return MainError(erroMessage: state.errorMessage, opressed: () {
+            sourceCubitViewModel.getSource(widget.category!.id);
+          });
         } else {
-          return SourceTabs(sourceList: viewModel.sourceList!);
+          return MainLoading();
         }
-      },),
-    );
+      },);
+
+
   }
 }

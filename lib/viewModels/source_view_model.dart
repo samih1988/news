@@ -15,7 +15,7 @@ class SourceViewModel extends ChangeNotifier {
     notifyListeners();
     try {
       isLoading = true;
-      var response = await DioManager.getSource(categoryId);
+      var response = await DioManager().getSource(categoryId);
       if (response.status == 'error') {
         isLoading = false;
         errorMessage = response.message;

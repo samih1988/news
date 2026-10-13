@@ -14,7 +14,7 @@ class NewsViewModel extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
-      var response = await DioManager.getNewsBySourceId(
+      var response = await DioManager().getNewsBySourceId(
         sourceIndex,
         page: page,
         pageSize: pageSize,
