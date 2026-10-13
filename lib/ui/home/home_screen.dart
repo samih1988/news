@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:news/api/api_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/di/di.dart';
+import 'package:news/di_config/di_config.dart';
 import 'package:news/l10n/app_localizations.dart';
 import 'package:news/models/category_model.dart';
 import 'package:news/providers/search_provider.dart';
+import 'package:news/ui/news/cubit/news_state_cubit.dart';
+import 'package:news/ui/news/cubit/news_view_model_cubit.dart';
 import 'package:news/ui/news/news_item.dart';
 import 'package:news/ui/news/news_moadl_dialog.dart';
 import 'package:news/widgets/custom_drawer.dart';
@@ -25,10 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
   CategoryModel? selectedCategory;
   bool isSearching = false;
   final TextEditingController searchController = TextEditingController();
+  final NewsViewModelCubit searchCubit = getIt();
 
   @override
   void dispose() {
     searchController.dispose();
+    searchCubit.close();
     super.dispose();
   }
 
@@ -64,6 +70,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 .titleMedium,
             onChanged: (val) {
               searchProvider.setSearchQuery(val);
+              if (val
+                  .trim()
+                  .isNotEmpty) {
+                searchCubit.searchNews(val);
+              }
             },
             sufixIcon: IconButton(
               onPressed: () {
@@ -116,53 +127,48 @@ class _HomeScreenState extends State<HomeScreen> {
     if (isSearching && searchQuery
         .trim()
         .isNotEmpty) {
-      return FutureBuilder(
-        future: ApiManager.searchNews(searchQuery),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
+      return BlocBuilder<NewsViewModelCubit, NewsStateCubit>(
+        bloc: searchCubit,
+        builder: (context, state) {
+          if (state is NewsLoadingState) {
             return const MainLoading();
-          } else if (snapshot.hasError) {
+          } else if (state is NewsErrorState) {
             return MainError(
-              erroMessage: snapshot.error.toString(),
+              erroMessage: state.errorMessage,
               opressed: () {
-                setState(() {});
+                searchCubit.searchNews(searchQuery);
               },
             );
-          } else if (snapshot.data?.status != 'ok') {
-            return MainError(
-              erroMessage: snapshot.data?.message ?? "Error loading news",
-              opressed: () {
-                setState(() {});
+          } else if (state is NewsSuccessState) {
+            var newsList = state.newsList;
+            return newsList.isEmpty
+                ? Center(
+              child: Text(
+                AppLocalizations
+                    .of(context)
+                    ?.no_data ?? "No News Found",
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .headlineMedium,
+              ),
+            )
+                : ListView.builder(
+              itemCount: newsList.length,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    NewsMoadlDialog.showFixedTextModal(
+                      context,
+                      news: newsList[index],
+                    );
+                  },
+                  child: NewsCardWidget(news: newsList[index]),
+                );
               },
             );
           }
-          var newsList = snapshot.data?.articles ?? [];
-          return newsList.isEmpty
-              ? Center(
-            child: Text(
-              AppLocalizations
-                  .of(context)
-                  ?.no_data ?? "No News Found",
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .headlineMedium,
-            ),
-          )
-              : ListView.builder(
-            itemCount: newsList.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () {
-                  NewsMoadlDialog.showFixedTextModal(
-                    context,
-                    news: newsList[index],
-                  );
-                },
-                child: NewsCardWidget(news: newsList[index]),
-              );
-            },
-          );
+          return const SizedBox.shrink();
         },
       );
     } else if (selectedCategory != null) {

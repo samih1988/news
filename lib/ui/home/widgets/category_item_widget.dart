@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/cubit/theme/theme_view_model_cubit.dart';
 import 'package:news/l10n/app_localizations.dart';
 import 'package:news/models/category_model.dart';
-import 'package:news/providers/app_theme_provider.dart';
 import 'package:news/utils/app_styles.dart';
-import 'package:provider/provider.dart';
 
 class CategoryItemWidget extends StatelessWidget {
   final CategoryModel category;
@@ -18,8 +18,9 @@ class CategoryItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var themeProvider = Provider.of<AppThemeProvider>(context);
-    bool isDark = themeProvider.isDark;
+    bool isDark = context
+        .watch<ThemeViewModelCubit>()
+        .isDark;
     var localizations = AppLocalizations.of(context)!;
 
     // استخدام AppTheme بالكامل من خلال Theme.of(context)

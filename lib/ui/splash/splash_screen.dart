@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:news/ui/home/home_screen.dart';
 import 'package:news/utils/app_assets.dart';
 import 'package:news/utils/app_colors.dart';
-import 'package:provider/provider.dart';
-
-import '../../providers/app_theme_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/cubit/theme/theme_view_model_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -32,10 +31,10 @@ class _SplashScreenState extends State<SplashScreen> {
     // استخدام الامتدادات (Extensions) بحذر أو الاعتماد على MediaQuery مباشرة لضمان التجاوب
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var themeProvider = Provider.of<AppThemeProvider>(context);
+    bool isDark = context.watch<ThemeViewModelCubit>().isDark;
 
     return Scaffold(
-      backgroundColor: themeProvider.isDark ? AppColors.black : AppColors.white,
+      backgroundColor: isDark ? AppColors.black : AppColors.white,
       // يمكنك تغيير لون الخلفية بحسب الثيم
       body: SafeArea(
         child: Column(
@@ -46,8 +45,7 @@ class _SplashScreenState extends State<SplashScreen> {
             // الصورة التي في المنتصف (زيادة النسبة لتبدو أوضح)
             Center(
               child: Image.asset(
-                !themeProvider.isDark
-                    ? AppAssets.splashWhite
+                !isDark ? AppAssets.splashWhite
                     : AppAssets.splashDark,
                 width: width * 0.65,
                 // جعل الشعار يأخذ 65% من عرض الشاشة ليكون واضحاً
@@ -62,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Padding(
               padding: EdgeInsets.only(bottom: height * 0.04),
               child: Image.asset(
-                !themeProvider.isDark
+                !isDark
                     ? AppAssets.splashBrandWhite
                     : AppAssets.splashBrandDark,
                 width: width * 0.35,
